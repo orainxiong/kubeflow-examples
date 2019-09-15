@@ -1,25 +1,23 @@
-name: ROC curve
-description: Calculates Receiver Operating Characteristic curve. See https://en.wikipedia.org/wiki/Receiver_operating_characteristic
+name: Kubeflow - Serve TF model
+description: Serve TensorFlow model using Kubeflow TF-serving
 inputs:
-  - {name: Predictions dir,   type: GCSPath,  description: 'GCS path of prediction file pattern.'}  #TODO: Replace dir data + schema files # type: {GCSPath: {path_type: Directory}}
-  - {name: True class,        type: String, default: 'true',            description: 'The true class label for the sample. Default is "true".'}
-  - {name: True score column, type: String, default: 'true',            description: 'The name of the column for positive probability.'}
-  - {name: Target lambda,     type: String, default: '',                description: 'Text of Python lambda function which returns boolean value indicating whether the classification result is correct.\nFor example, "lambda x: x[''a''] and x[''b'']". If missing, input must have a "target" column.'}
-  - {name: Output dir,        type: GCSPath,  description: 'GCS path of the output directory.'}     #TODO: Replace dir with single file # type: {GCSPath: {path_type: Directory}}
-outputs:
-  - {name: MLPipeline UI metadata, type: UI metadata}
-  - {name: MLPipeline Metrics,     type: Metrics}
+  - {name: Model dir,     type: GCSPath, description: 'Path of GCS directory containing exported Tensorflow model.'} # type: {GCSPath: {path_type: Directory}}
+  - {name: Cluster name,  type: String, default: '',              description: 'Kubernetes cluster name where the TS-serving service should be deployed. Uses the current cluster by default.'}
+  - {name: Namespace,     type: String, default: 'kubeflow',      description: 'Kubernetes namespace where the TS-serving service should be deployed.'}
+  - {name: Server name,   type: String, default: 'model-server',  description: 'TF-serving server name to use when deploying.'}
+  - {name: PVC name,      type: String, default: '' ,             description: 'Optional PersistentVolumeClaim to use.'}
+  - {name: Service type,  type: String, default: 'ClusterIP' ,             description: 'Optional Service type to use, two options: "ClusterIP" (default if not set) and "NodePort".'}
+#outputs:
+#  - {name: Endppoint URI, type: Serving URI,                      description: 'URI of the deployed prediction service..'}
 implementation:
   container:
-    image: 192.168.31.77:5000/ml-pipeline/ml-pipeline-local-confusion-matrix:1449d08aeeeb47731d019ea046d90904d9c77953
-    command: [python2, /ml/roc.py]
+    image: 192.168.31.77:5000/ml-pipeline/ml-pipeline-kubeflow-deployer:1449d08aeeeb47731d019ea046d90904d9c77953
+    command: [/bin/deploy.sh]
     args: [
-      --predictions,        {inputValue: Predictions dir},
-      --trueclass,          {inputValue: True class},
-      --true_score_column,  {inputValue: True score column},
-      --target_lambda,      {inputValue: Target lambda},
-      --output,             {inputValue: Output dir},
+      --model-export-path,  {inputValue: Model dir},
+      --cluster-name,       {inputValue: Cluster name},
+      --namespace,          {inputValue: Namespace},
+      --server-name,        {inputValue: Server name},
+      --pvc-name,           {inputValue: PVC name},
+      --service-type,       {inputValue: Service type},
     ]
-    fileOutputs:
-      MLPipeline UI metadata: /mlpipeline-ui-metadata.json
-      MLPipeline Metrics:     /mlpipeline-metrics.json
