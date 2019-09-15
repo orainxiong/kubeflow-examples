@@ -27,7 +27,7 @@ implementation:
       --steps, {inputValue: Steps},
       #      --epochs, {inputValue: Epochs},
       --target, {inputValue: Target},
-      --preprocessing-module, {inputValue: Preprocessing module},
+      --preprocessing.py-module, {inputValue: Preprocessing module},
       --job-dir, {inputValue: Training output dir},
     ]
     fileOutputs:
