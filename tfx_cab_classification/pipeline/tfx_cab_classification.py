@@ -40,10 +40,10 @@ kubeflow_deploy_op              = components.load_component_from_url('https://ra
 def taxi_cab_classification(
     output,
     project,
-    column_names='gs://ml-pipeline-playground/tfx/taxi-cab-classification/column-names.json',
+    column_names='https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/taxi-cab-classification/column-names.json',
     key_columns='trip_start_timestamp',
-    train='gs://ml-pipeline-playground/tfx/taxi-cab-classification/train.csv',
-    evaluation='gs://ml-pipeline-playground/tfx/taxi-cab-classification/eval.csv',
+    train='https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/taxi-cab-classification/train.csv',
+    evaluation='https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/taxi-cab-classification/eval.csv',
     mode='local',
     preprocess_module='gs://ml-pipeline-playground/tfx/taxi-cab-classification/preprocessing.py',
     learning_rate=0.1,
