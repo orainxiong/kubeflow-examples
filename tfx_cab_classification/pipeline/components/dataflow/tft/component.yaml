@@ -20,7 +20,7 @@ implementation:
       --schema,  {inputValue: Schema},
       --project, {inputValue: GCP project},
       --mode,    {inputValue: Run mode},
-      --preprocessing.py-module, {inputValue: Preprocessing module},
+      --preprocessing-module, {inputValue: Preprocessing module},
       --output,  {inputValue: Transformed data dir},
     ]
     fileOutputs:
