@@ -45,7 +45,7 @@ def taxi_cab_classification(
     train='https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/taxi-cab-classification/train.csv',
     evaluation='https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/taxi-cab-classification/eval.csv',
     mode='local',
-    preprocess_module='gs://ml-pipeline-playground/tfx/taxi-cab-classification/preprocessing.py',
+    preprocess_module='https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/taxi-cab-classification/preprocessing.py',
     learning_rate=0.1,
     hidden_layer_size='1500',
     steps=3000,
