@@ -16,7 +16,7 @@ outputs:
   - {name: MLPipeline UI metadata, type: UI metadata}
 implementation:
   container:
-    image: 192.168.31.77:5000/ml-pipeline/ml-pipeline-kubeflow-tf-trainer:1449d08aeeeb47731d019ea046d90904d9c77953
+    image: registry.cn-hangzhou.aliyuncs.com/ml-pipeline/ml-pipeline-kubeflow-tf-trainer:1449d08aeeeb47731d019ea046d90904d9c77953
     command: [python2, -m, trainer.task]
     args: [
       --transformed-data-dir, {inputValue: Transformed data dir},
