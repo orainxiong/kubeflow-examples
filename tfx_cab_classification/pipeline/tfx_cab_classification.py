@@ -22,7 +22,7 @@ from kfp import onprem
 
 platform = 'onprem'
 
-dataflow_tf_data_validation_op  = components.load_component_from_url('https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/components/dataflow/tfdv/component.yaml'
+dataflow_tf_data_validation_op  = components.load_component_from_url('https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/components/dataflow/tfdv/component.yaml')
 dataflow_tf_transform_op        = components.load_component_from_url('https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/components/dataflow/tft/component.yaml')
 tf_train_op                     = components.load_component_from_url('https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/components/kubeflow/dnntrainer/component.yaml')
 dataflow_tf_model_analyze_op    = components.load_component_from_url('https://raw.githubusercontent.com/orainxiong/kubeflow-examples/master/tfx_cab_classification/pipeline/components/dataflow/tfma/component.yaml')
