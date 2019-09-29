@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: minio-gateway
+  namespace: kubeflow
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: minioui
+  namespace: kubeflow
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - minio-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /minio
+      route:
+        - destination:
+            host: minio-service
+            port:
+              number: 9000
