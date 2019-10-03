@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # release compute resource
-kubectl get pods -n kubeflow | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n kubeflow
+kubectl get pods -n kubeflow | grep -E "Evicted|Error|Completed" | awk '{print $1}' | xargs kubectl delete pod -n kubeflow
 
+kubectl get deployment -n kubeflow | grep -e 'viewer-' | grep -e '-deployment' | awk '{print $1}' | xargs kubectl delete deployment -n kubeflow
 
 
 # release pvc/pv resource

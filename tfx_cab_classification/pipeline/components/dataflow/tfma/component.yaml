@@ -18,7 +18,7 @@ outputs:
   - {name: MLPipeline UI metadata, type: UI metadata}
 implementation:
   container:
-    image: registry.cn-hangzhou.aliyuncs.com/ml-pipelines/ml-pipeline-dataflow-tfma:151c5349f13bea9d626c988563c04c0a86210c21
+    image: 192.168.31.77:5000/ml-pipelines/ml-pipeline-dataflow-tfma:151c5349f13bea9d626c988563c04c0a86210c21
     command: [python2, /ml/model_analysis.py]
     args: [
       --model,    {inputValue: Model},
