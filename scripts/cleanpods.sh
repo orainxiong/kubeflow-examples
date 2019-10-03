@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # release compute resource
-kubectl get pods -n kubeflow | grep Error | awk '{print $1}' | xargs kubectl delete pod -n kubeflow
+kubectl get pods -n kubeflow | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n kubeflow
 
 
 
