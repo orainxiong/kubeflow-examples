@@ -1,0 +1,19 @@
+apiVersion: "kubeflow.org/v1"
+kind: "TFJob"
+metadata:
+  name: "distributed-training"
+  namespace: "orain"
+spec:
+  cleanPodPolicy: None
+  tfReplicaSpecs:
+    Worker:
+      replicas: 3
+      restartPolicy: Never
+      template:
+        metadata:
+          annotations:
+            scheduling.k8s.io/group-name: "distributed-training"
+        spec:
+          containers:
+            - name: tensorflow
+              image: registry.cn-hangzhou.aliyuncs.com/kubeflow-images-public-orain/distributed_worker:v20181031-513e107c

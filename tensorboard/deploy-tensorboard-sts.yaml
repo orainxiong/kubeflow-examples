@@ -1,0 +1,66 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  labels:
+    app: tensorboard
+    kustomize.component: tensorboard
+  name: tensorboard
+  namespace: kubeflow
+spec:
+  serviceName: tensorboard
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      kustomize.component: tensorboard
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: tensorboard
+        kustomize.component: tensorboard
+    spec:
+      containers:
+        - args:
+            - --logdir=/notebooks/tensorboard/logs
+            - --port=6006
+          command:
+            - /usr/local/bin/tensorboard
+          image: tensorflow/tensorflow:1.8.0
+          imagePullPolicy: IfNotPresent
+          name: tensorboard
+          ports:
+            - containerPort: 6006
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "4"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /notebooks/tensorboard/logs
+              name: tensorboard-logs
+              readOnly: true
+              subPath: tensorboard/logs
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: tensorboard-logs
+          persistentVolumeClaim:
+            claimName: tensorboard-logs
+  volumeClaimTemplates:
+    - metadata:
+        name: tensorboard-logs
+      spec:
+        accessModes:
+          - ReadOnlyMany
+        resources:
+          requests:
+            storage: 5Gi
